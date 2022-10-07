@@ -1,0 +1,71 @@
+body {
+  margin: 0;
+  background-repeat: no-repeat;
+  background: linear-gradient(to bottom, rgb(183, 33, 255) 0%, rgb(42, 245, 152) 10%, rgb(254, 192, 81) 20%, rgb(254, 225, 64) 30%, rgb(250, 112, 154) 40%, rgb(209, 58, 123) 50%, rgb(255, 82, 93) 60%, rgb(236, 39, 52) 70%, rgb(255, 255, 82) 80%, rgb(152, 245, 86) 90%, rgb(50, 255, 230) 100%);
+  color: #fff;
+  font-family: Monospace;
+  font-size: 13px;
+  line-height: 24px;
+  height: 5000px;
+}
+
+body:before {
+  content: "";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: -1;
+  background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.2), #21D4FD 75%);
+}
+
+a {
+  color: #ff0;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.hidden {
+  display: none;
+}
+
+a, button, input, select {
+  pointer-events: auto;
+}
+
+#container canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+#progress-bar {
+  height: 15px;
+  background: green;
+}
+
+.header {
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  text-align: center;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  z-index: 1; /* TODO Solve this in HTML */
+}
+.header .logo {
+  max-width: 300px;
+}/*# sourceMappingURL=index.css.map */
