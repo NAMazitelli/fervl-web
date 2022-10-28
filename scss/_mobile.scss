@@ -1,0 +1,20 @@
+@media screen and (max-width: 600px) {
+	.header {
+		&.full {
+			.logo {
+				max-width: 70%;
+			}
+		}
+		.logo {
+			max-width: 50%;
+		}
+	}
+	.container {
+		padding:0 15px;
+		.sections {
+			.section {
+				max-width: 100%;
+			}
+		}
+	}
+}

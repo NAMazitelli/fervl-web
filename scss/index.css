@@ -1,15 +1,25 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   background-repeat: no-repeat;
-  background: linear-gradient(to bottom, rgb(183, 33, 255) 0%, rgb(42, 245, 152) 10%, rgb(254, 192, 81) 20%, rgb(254, 225, 64) 30%, rgb(250, 112, 154) 40%, rgb(209, 58, 123) 50%, rgb(255, 82, 93) 60%, rgb(236, 39, 52) 70%, rgb(255, 255, 82) 80%, rgb(152, 245, 86) 90%, rgb(50, 255, 230) 100%);
   color: #fff;
-  font-family: Monospace;
+  font-family: "Roboto", sans-serif;
   font-size: 13px;
   line-height: 24px;
-  height: 5000px;
 }
-
-body:before {
+body.blue {
+  background: repeating-linear-gradient(45deg, #05A8AA, #05A8AA 100px, #133C55 100px, #133C55 200px);
+}
+body.blue:before {
+  content: none;
+}
+body.pink {
+  background: linear-gradient(to bottom, rgb(183, 33, 255) 0%, rgb(42, 245, 152) 10%, rgb(254, 192, 81) 20%, rgb(254, 225, 64) 30%, rgb(250, 112, 154) 40%, rgb(209, 58, 123) 50%, rgb(255, 82, 93) 60%, rgb(236, 39, 52) 70%, rgb(255, 255, 82) 80%, rgb(152, 245, 86) 90%, rgb(50, 255, 230) 100%);
+}
+body.pink:before {
   content: "";
   position: fixed;
   top: 0;
@@ -17,6 +27,29 @@ body:before {
   width: 100%;
   z-index: -1;
   background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.2), #21D4FD 75%);
+}
+body.black {
+  background: #fff;
+}
+body.black:before {
+  content: "";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: -1;
+  background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.2), #000 75%);
+}
+body.black:after {
+  content: "";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: -1;
+  background-image: url("/puntos.png");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 a {
@@ -34,7 +67,7 @@ button {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 a, button, input, select {
@@ -47,9 +80,127 @@ a, button, input, select {
   left: 0;
 }
 
-#progress-bar {
+.container {
+  max-width: 1024px;
+  margin: auto;
+  z-index: 2;
+  position: relative;
+}
+.container .sections {
+  margin-top: 100vh;
+}
+.container .sections .section {
+  max-width: 60%;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 30px;
+  margin-top: 30px;
+  font-size: 18px;
+  font-weight: 100;
+  letter-spacing: 2px;
+}
+.container .sections .section:first-child {
+  margin-top: 0;
+}
+.container .sections .section p {
+  font-weight: 100;
+}
+.container .sections .section span {
+  display: flex;
+}
+.container .sections .section h2 {
+  font-size: 24px;
+  letter-spacing: 10px;
+  font-weight: 100;
+}
+
+.flex {
+  display: flex;
+}
+
+.progress-bar-container {
+  height: 100vh;
+  width: 100vw;
+  z-index: 9;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: fixed;
+  background: linear-gradient(to bottom, rgb(183, 33, 255) 0%, rgb(42, 100, 152) 50%, rgb(254, 192, 81) 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.progress-bar-container:before {
+  content: "";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: -1;
+  background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.2), #21D4FD 75%);
+}
+.progress-bar-container #progress-bar {
   height: 15px;
-  background: green;
+  background: #ff64ba;
+  border-radius: 15px;
+  max-width: 300px;
+}
+
+/** loader **/
+.sh1 {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 50px 50px 0 0;
+  border-color: #fff transparent transparent transparent;
+  margin: 0 auto;
+  -webkit-animation: shk1 1s ease-in-out infinite normal;
+          animation: shk1 1s ease-in-out infinite normal;
+}
+
+.sh2 {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0 50px 50px;
+  border-color: transparent transparent #ff64ba transparent;
+  margin: -50px auto 0;
+  -webkit-animation: shk2 1s ease-in-out infinite alternate;
+          animation: shk2 1s ease-in-out infinite alternate;
+}
+
+/** animation starts here **/
+@-webkit-keyframes shk1 {
+  0% {
+    transform: rotate(-360deg);
+  }
+}
+@keyframes shk1 {
+  0% {
+    transform: rotate(-360deg);
+  }
+}
+@-webkit-keyframes shk2 {
+  0% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes shk2 {
+  0% {
+    transform: rotate(360deg);
+  }
+}
+.lt {
+  color: #fff;
+  font-family: "Roboto", sans-serif;
+  margin: 30px auto;
+  text-align: center;
+  font-weight: 100;
+  letter-spacing: 10px;
+  font-size: 18px;
 }
 
 .header {
@@ -64,8 +215,174 @@ a, button, input, select {
   -ms-user-select: none;
   user-select: none;
   pointer-events: none;
-  z-index: 1; /* TODO Solve this in HTML */
+  height: 200vh;
+  max-height: 100px;
+  z-index: 1;
+  transition: all 0.5s;
+  background: rgba(0, 0, 0, 0.2);
 }
 .header .logo {
-  max-width: 300px;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  transition: all 0.5s;
+  max-width: 200px;
+  margin: auto;
+  position: absolute;
+  padding: 20px;
+}
+.header.full {
+  max-height: 100vh;
+  width: 100vw;
+  background: transparent;
+}
+.header.full .logo {
+  max-width: 25vw;
+}
+.header .container {
+  height: 100%;
+}
+
+.experience {
+  float: right;
+}
+
+.timeline {
+  width: 100%;
+  color: #fff;
+  padding: 30px 20px;
+}
+.timeline ul {
+  list-style-type: none;
+  border-left: 2px solid #fff;
+  padding: 10px 5px;
+}
+.timeline ul li {
+  padding: 20px 20px;
+  position: relative;
+  cursor: pointer;
+  transition: 0.5s;
+}
+.timeline ul li span {
+  display: inline-block;
+  background-color: #fff;
+  color: #000;
+  border-radius: 25px;
+  padding: 2px 15px;
+  font-size: 15px;
+  font-weight: 300;
+  text-align: left;
+}
+.timeline ul li .content h3 {
+  color: #fff;
+  font-size: 24px;
+  padding-top: 5px;
+  text-align: left;
+  font-weight: 100;
+  margin: 0;
+  margin-top: 20px;
+}
+.timeline ul li .content h4 {
+  color: #fff;
+  font-size: 18px;
+  padding-top: 5px;
+  text-align: left;
+  font-weight: 100;
+  margin: 0;
+}
+.timeline ul li .content p {
+  padding: 5px 0px 15px 0px;
+  font-size: 15px;
+  text-align: left;
+  margin-bottom: 0;
+}
+.timeline ul li:before {
+  position: absolute;
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: #fff;
+  border-radius: 50%;
+  left: -11px;
+  top: 28px;
+  transition: 0.5s;
+}
+.timeline ul li:hover:before {
+  background-color: #34ace0;
+  box-shadow: 0px 0px 10px 2px #34ace0;
+}
+.timeline ul.description {
+  padding-left: 10px;
+  border-left: 0;
+}
+.timeline ul.description li {
+  font-size: 15px;
+  padding: 5px 25px;
+}
+.timeline ul.description li:before {
+  top: 12px;
+}
+
+@media (max-width: 300px) {
+  .timeline {
+    width: 100%;
+    padding: 30px 5px 30px 10px;
+  }
+  .timeline ul li .content h3 {
+    color: #34ace0;
+    font-size: 15px;
+  }
+}
+.contact {
+  height: 100vh;
+  width: 100%;
+  float: left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.contact h2 {
+  font-size: 48px;
+}
+.contact-socialmedia {
+  display: flex;
+  justify-content: space-between;
+}
+.contact-button {
+  border: 1px solid #ccc;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 60px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all ease-in 0.2s;
+}
+.contact-button svg {
+  transition: all ease-in 0.2s;
+  width: 20px;
+  fill: white;
+}
+.contact-button:hover {
+  background: #fff;
+}
+.contact-button:hover svg {
+  fill: #000;
+}
+
+@media screen and (max-width: 600px) {
+  .header.full .logo {
+    max-width: 70%;
+  }
+  .header .logo {
+    max-width: 50%;
+  }
+  .container {
+    padding: 0 15px;
+  }
+  .container .sections .section {
+    max-width: 100%;
+  }
 }/*# sourceMappingURL=index.css.map */

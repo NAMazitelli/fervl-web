@@ -1,6 +1,5 @@
 import * as THREE from '../lib/three.module.js';
 import * as GLOBAL from '../variables.js';
-import { GLTFLoader } from '../lib/GLTFLoader.js';
 import { RenderPass } from '../lib/RenderPass.js';
 import { UnrealBloomPass } from '../lib/UnrealBloomPass.js';
 import { EffectComposer } from '../lib/EffectComposer.js';
@@ -22,7 +21,7 @@ class World {
         this.startingCamX;
         this.circleStartZ;
         this.mannStartY;
-
+        this.manMaterial = GLOBAL.PINK;
     }
 
     setup() {
@@ -36,6 +35,7 @@ class World {
 
     setupScene() {
         this.scene = new THREE.Scene();
+        this.scene.fog = new THREE.FogExp2( 0xff64ba, 0.1 );
     }
 
     setupLights() {
@@ -78,8 +78,8 @@ class World {
     setupMeshes() {
         this.cubeMap = this.createCubeMap();
         //for ( const model of window.models ) this.scene.add( model );
-        if (window.models.runningMan) this.scene.add( window.models.runningMan );
         if (window.models.runningMan) {
+            this.scene.add( window.models.runningMan );
             this.staticMannequin = window.models.runningMan;
         } 
 
@@ -93,16 +93,16 @@ class World {
         //add sphere2
         const geometrydistort = new THREE.SphereGeometry( 1, 15, 15 );
         const shadedMaterial = new THREE.MeshStandardMaterial({
-            roughness: 0.125,
-            metalness: 0.875,
+            roughness: 1,
+            metalness: 1,
             envMap: this.cubeMap,
             onBeforeCompile: this.sphereShader,
         });
-        this.circleMeshDistorted  = new THREE.Mesh( geometrydistort, shadedMaterial );
+        this.circleMeshDistorted = new THREE.Mesh( geometrydistort, shadedMaterial );
         this.scene.add( this.circleMeshDistorted );
-        this.circleMeshDistorted.position.set(10, 0.7,0 );
+        this.circleMeshDistorted.position.set( 9, 0.7,0 );
     }
-    
+
     createCubeMap(){
         let images = [];
     
@@ -133,37 +133,16 @@ class World {
         this.renderer.render(this.scene, this.camera);
     }
 
-   
-    setAnimation(t) {
-            if (this.staticMannequin && GLOBAL.scrollY <= 640) {
-                this.circleMeshDistorted.rotation.y = GLOBAL.scrollY * 0.005;
-                console.log(this.staticMannequin.rotation.y)
-                this.staticMannequin.rotation.y = GLOBAL.scrollY * 0.01;
-            }
+    setAnimation() {
+        if (this.staticMannequin && GLOBAL.scrollY <= GLOBAL.sizes.height) {
+            this.firstAnimation();
+        }
 
-            if (this.camera && GLOBAL.scrollY >= 640 && GLOBAL.scrollY < 1000) {
-                if (!this.circleStartZ) {
-                    this.circleStartZ = this.circleMeshDistorted.rotation.z;
-                }
-
-                if (!this.mannStartY) {
-                    this.mannStartY = this.staticMannequin.rotation.y;
-                }
-
-                let camOffset = (GLOBAL.scrollY  - 640) * 0.005
-                this.camera.position.x = this.startingCamX + camOffset;
-                
-                this.circleMeshDistorted.rotation.z = this.circleStartZ + camOffset;
-                if ( this.staticMannequin.rotation.y > 4.6875) {
-                    this.staticMannequin.rotation.y = this.mannStartY - camOffset;
-
-                }
-            }
-
-            GLOBAL.globalUniforms.time.value = t * 0.1;
-            GLOBAL.globalUniforms.bloom.value = 1;
+        if (this.camera && GLOBAL.scrollY >= GLOBAL.sizes.height && GLOBAL.scrollY < GLOBAL.sizes.height * 2) {
+            this.secondAnimation();
+        }
     }
-    
+
     setupBloom() {
         const renderScene = new RenderPass( this.scene, this.camera );
         const bloomPass = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 );
@@ -210,6 +189,54 @@ class World {
         shader.uniforms.color2 = GLOBAL.localUniforms.color2;
         shader.vertexShader = GLOBAL.vertexShader(shader.vertexShader);
         shader.fragmentShader = GLOBAL.fragmentShader(shader.fragmentShader);
+    }
+
+    firstAnimation() {
+        let frame = (GLOBAL.scrollY * 6.5) / GLOBAL.sizes.height
+        this.circleMeshDistorted.rotation.y = frame;
+        this.staticMannequin.rotation.y =  frame;
+        
+        if (frame >= 3.25 && this.manMaterial == GLOBAL.PINK) {
+            this.changeAtmo(GLOBAL.BLUE);
+        } else if (frame < 3.25 && this.manMaterial == GLOBAL.BLUE) {
+            this.changeAtmo(GLOBAL.PINK);
+        }
+    }
+
+    secondAnimation() {
+        let frame = (((GLOBAL.scrollY - GLOBAL.sizes.height) * 5) / (GLOBAL.sizes.height * 2));
+        let characterframe = 6.5 - frame;
+        let cameraframe = - 4 - frame;
+        this.circleMeshDistorted.rotation.z = frame;
+        this.staticMannequin.rotation.y = characterframe;
+        if (this.camera.position.x < -2 && GLOBAL.scrollDirection == GLOBAL.DOWN) {
+           this.changeAtmo(GLOBAL.BLACK);
+            this.circleMesh.material = GLOBAL.whiteMaterial;
+            this.camera.fov = 45 - frame *10
+            this.camera.updateProjectionMatrix();
+            this.camera.position.x = cameraframe;
+        }
+        
+        if (this.camera.position.x > -10 && GLOBAL.scrollDirection == GLOBAL.UP && 1000) {
+            this.changeAtmo(GLOBAL.BLUE);
+            this.circleMesh.material = GLOBAL.blackMaterial;
+
+            this.camera.fov = 45 - frame *10
+            this.camera.updateProjectionMatrix();
+            this.camera.position.x = cameraframe;
+        }
+    }
+
+    changeAtmo(color){
+        document.body.classList.remove(this.manMaterial);
+        document.body.classList.add(color);
+        this.scene.fog = new THREE.FogExp2( GLOBAL.COLORS[color], 0.1 );
+        this.manMaterial = color
+        this.staticMannequin.traverse( function ( object ) {
+            if ( object.isMesh ) {
+                object.material = GLOBAL.MATERIALS[color];
+            }
+        });
     }
 }
 

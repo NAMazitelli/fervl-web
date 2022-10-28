@@ -18,18 +18,16 @@ export class Loader {
 		  // onStart may be called multiple times
 		  // don't run the animation more than once
 		  if ( thisObj.frameID !== null ) return;
-		  console.log("aca se llama!");
 		  thisObj.animateBar(thisObj);
 		};
 
 
 		this.loadManager.onLoad = ( ) => {
-            window.progressBar.classList.add( 'hidden' );
+            window.progressBar.parentElement.classList.add( 'hidden' );
 
 		  // reset the bar in case we need to use it again
 		  thisObj.percentComplete = 0;
 		  window.progressBar.style.width = 0;
-		  console.log("cancela la animacion?");
 		  cancelAnimationFrame( this.frameID );
 	 	  window.allLoaded()
 		  // do any other on load things
@@ -81,18 +79,9 @@ export class Loader {
 		this.loadModel('models/runningman.glb', GLOBAL.STATIC_MANNEQUIN,  function ( gltf ) {
 
 			gltf.scene.traverse( function ( object ) {
-
 				if ( object.isMesh ) {
 					object.castShadow = true;
-					object.material = new THREE.MeshPhysicalMaterial({
-						color: 0xff64ba,
-						metalness: 0,
-						roughness: 0,
-						clearcoat: 1.0 ,
-						clearcoatRoughness: 0 ,
-						reflectivity: 0,
-					});
-					window.meshes[GLOBAL.STATIC_MANNEQUIN] = object;
+					object.material = GLOBAL.pinkMaterial;
 				}
 			} );
 

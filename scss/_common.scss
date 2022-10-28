@@ -1,22 +1,63 @@
+* {
+	box-sizing: border-box;
+}
 body {
 	margin: 0;
 	background-repeat: no-repeat;
-	background: linear-gradient(to bottom, rgba(183,33,255,1) 0%, rgba(42,245,152,1) 10%, rgba(254,192,81,1) 20%, rgba(254,225,64,1) 30%, rgba(250,112,154,1) 40%, rgba(209,58,123,1) 50%, rgba(255,82,93,1) 60%, rgba(236,39,52,1) 70%, rgba(255,255,82,1) 80%, rgba(152,245,86,1) 90%, rgba(50,255,230,1) 100%);
 	color: #fff;
-	font-family: Monospace;
+	font-family: 'Roboto', sans-serif;
 	font-size: 13px;
 	line-height: 24px;
-	height:5000px;
-}
 
-body:before{
-	content:'';
-	position: fixed;
-	top: 0;
-	bottom: 0;
-	width: 100%;
-	z-index: -1;
-	background: linear-gradient(to right bottom, rgba(255,255,255,0.2), #21D4FD 75%);
+	&.blue {
+		background:repeating-linear-gradient(
+			45deg,
+			#05A8AA,
+			#05A8AA 100px,
+			#133C55 100px,
+			#133C55 200px
+		  );
+		&:before {
+			content: none;
+		}
+	}
+
+	&.pink {
+		background: linear-gradient(to bottom, rgba(183,33,255,1) 0%, rgba(42,245,152,1) 10%, rgba(254,192,81,1) 20%, rgba(254,225,64,1) 30%, rgba(250,112,154,1) 40%, rgba(209,58,123,1) 50%, rgba(255,82,93,1) 60%, rgba(236,39,52,1) 70%, rgba(255,255,82,1) 80%, rgba(152,245,86,1) 90%, rgba(50,255,230,1) 100%);
+		&:before{
+			content:'';
+			position: fixed;
+			top: 0;
+			bottom: 0;
+			width: 100%;
+			z-index: -1;
+			background: linear-gradient(to right bottom, rgba(255,255,255,0.2), #21D4FD 75%);
+		}
+	}
+
+	&.black {
+		background: #fff; 
+		&:before{
+			content:'';
+			position: fixed;
+			top: 0;
+			bottom: 0;
+			width: 100%;
+			z-index: -1;
+			background: linear-gradient(to right bottom, rgba(255,255,255,0.2), #000 75%);
+		}
+		&:after{
+			content:'';
+			position: fixed;
+			top: 0;
+			bottom: 0;
+			width: 100%;
+			z-index: -1;
+			background-image:url('/puntos.png');
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+	}
 }
 
 a {
@@ -33,7 +74,7 @@ button {
 	text-transform: uppercase;
 }
 
-.hidden{display:none;}
+.hidden{display:none!important;}
 
 a, button, input, select {
 	pointer-events: auto;
@@ -43,4 +84,43 @@ a, button, input, select {
     position: fixed;
     top: 0;
     left: 0;
+}
+
+.container {
+	max-width: 1024px;
+	margin:auto;
+	z-index:2;
+	position:relative;
+	.sections {
+		margin-top: 100vh;
+		.section {
+			max-width: 60%;
+			border-radius: 20px;
+			background: rgba(0,0,0,0.5);
+			padding:30px;
+			margin-top:30px;
+			font-size:18px;
+			font-weight: 100;
+			letter-spacing: 2px;
+
+
+			&:first-child { margin-top : 0;}
+			p {
+				font-weight: 100;
+			}
+
+			span {
+				display: flex;
+			}
+
+			h2 {
+				font-size:24px;
+				letter-spacing: 10px;
+				font-weight: 100;
+			}
+		}
+	}
+}
+.flex { 
+	display: flex;
 }

@@ -23,12 +23,18 @@ const bloomParams = {
     bloomThreshold: 0,
     bloomRadius: 0
 };
-  
+
 const container = document.getElementById( 'container' );
 let scrollY = window.scrollY
 const UP = "up";
 const DOWN = "down";
+const ORANGE = "orange";
+const PINK = "pink";
+const BLUE = "blue";
+const BLACK = "black";
+const WHITE = "white";
 
+let lastDirection;
 /* end global variables */
 /* shaders */
 const vertexShader = (vShader) => `
@@ -95,13 +101,61 @@ vec4 diffuseColor = vec4( col, opacity );
   gl_FragColor.rgb = mix(gl_FragColor.rgb, vec3(0), bloom);
   gl_FragColor.rgb = mix(gl_FragColor.rgb, col * 2., grid);
 `);
+/* 
+const pinkMaterial = new THREE.MeshPhysicalMaterial({
+  color: 0xff64ba,
+  metalness: 0,
+  roughness: 0,
+  clearcoat: 1.0 ,
+  clearcoatRoughness: 0 ,
+  reflectivity: 0,
+});
+const orangeMaterial = new THREE.MeshPhysicalMaterial({
+  color: 0xffffff,
+  metalness: 0,
+  roughness: 0,
+  clearcoat: 1.0 ,
+  clearcoatRoughness: 0 ,
+  reflectivity: 0,
+});
+const blueMaterial = new THREE.MeshPhysicalMaterial({
+  color: 0xffffff,
+  metalness: 0,
+  roughness: 0,
+  clearcoat: 1.0 ,
+  clearcoatRoughness: 0 ,
+  reflectivity: 0,
+}); */
+const pinkMaterial = new THREE.MeshBasicMaterial( { color: 0xff64ba });
 
+const orangeMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff });
+const blueMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff });
+
+const blackMaterial = new THREE.MeshBasicMaterial( { color: 0x000000 });
+const whiteMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff });
 let scrollDirection;
+
+const MATERIALS = {
+  [PINK] : pinkMaterial,
+  [ORANGE] : orangeMaterial,
+  [BLUE] : blueMaterial,
+  [BLACK] : blackMaterial,
+  [WHITE] : whiteMaterial
+};
+
+const COLORS = {
+  [PINK]: 0xff64ba,
+  [ORANGE]: 0x05A8AA,
+  [BLUE] : 0x05A8AA,
+  [BLACK] : 0x000000,
+  [WHITE] : 0x000000,
+};
+
 /* end shaders */
 const setScrollY = (sy) => scrollY = sy
 const setSize = (w,h) => sizes = { width: w, height: h};
 const setScrollDir = (dir) => scrollDirection = dir;
-
+const setLastDirection = (dir) => lastDirection = dir
 export { 
     sizes,
     globalUniforms,
@@ -113,10 +167,22 @@ export {
     UP,
     DOWN,
     STATIC_MANNEQUIN,
+    ORANGE,
+    PINK,
+    BLUE,
+    BLACK,
+    WHITE,
+    MATERIALS,
+    COLORS,
+    pinkMaterial,
+    orangeMaterial,
+    whiteMaterial,
+    blackMaterial,
     vertexShader,
     fragmentShader,
     setScrollY,
     setSize,
     setScrollDir,
+    setLastDirection,
 };
 

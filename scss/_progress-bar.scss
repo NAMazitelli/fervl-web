@@ -1,4 +1,85 @@
-#progress-bar{
-	height:15px;
-	background:green;
+.progress-bar-container {
+	height:100vh;
+	width:100vw;
+	z-index:9;
+	top:0;
+	bottom:0;
+	left: 0;
+	right: 0;
+	position: fixed;
+	background: linear-gradient(to bottom, rgba(183,33,255,1) 0%, rgba(42,100,152,1) 50%, rgba(254,192,81,1) 100%);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+
+
+	&:before{
+		content:'';
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		width: 100%;
+		z-index: -1;
+		background: linear-gradient(to right bottom, rgba(255,255,255,0.2), #21D4FD 75%);
+	}
+
+	#progress-bar{
+		height:15px;
+		background:#ff64ba;
+    border-radius: 15px;
+		max-width: 300px;
+	}
 }
+
+/** loader **/
+.sh1 {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 50px 50px 0 0;
+  border-color: #fff transparent transparent transparent;
+  margin: 0 auto;
+  animation: shk1 1s ease-in-out infinite normal;
+}
+
+.sh2 {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0 50px 50px;
+  border-color: transparent  transparent #ff64ba transparent ;
+  margin: -50px auto 0;
+  animation: shk2 1s ease-in-out infinite alternate;
+}
+
+/** animation starts here **/
+@keyframes shk1 {
+  0% {
+    transform: rotate(-360deg);
+  }  
+  
+  100% {
+  }
+}
+
+@keyframes shk2 {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+  }
+}
+
+.lt {
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+  margin: 30px auto;
+  text-align: center;
+  font-weight: 100;
+  letter-spacing: 10px;
+  font-size: 18px;
+}
+
+
+

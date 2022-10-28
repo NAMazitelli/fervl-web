@@ -10,8 +10,34 @@
 	-ms-user-select: none;
 	user-select: none;
 	pointer-events: none;
-	z-index: 1; /* TODO Solve this in HTML */
+	height: 200vh;
+	max-height: 100px;
+	z-index: 1;
+	transition: all 0.5s;
+
+	background: rgba(0,0,0,0.2);
+	
     .logo {
-        max-width:300px;
+		top: 0;
+		bottom: 0;
+		right: 0;
+		left: 0;
+		transition: all 0.5s;
+        max-width:200px;
+		margin: auto;
+    	position: absolute;
+		padding:20px;
     }
+
+	&.full {
+		max-height: 100vh;
+		width: 100vw;
+		background: transparent;
+
+		.logo {
+
+			max-width: 25vw;
+		}
+	}
+	.container { height: 100%; }
 }
